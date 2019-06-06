@@ -65,6 +65,7 @@
                   <th>Name</th>
                   <th>Result</th>
                   <th>Time</th>
+                  <th>Reason</th>
                   <th style="width: 40%">Output</th>
                   <th style="width: 40%">Expected</th>
                 </tr>
@@ -72,7 +73,8 @@
                   <td th:text="${test.key}"></td>
                   <td th:text="${test.value.getVerdict()}"></td>
                   <td th:text="${test.value.getTime()}"></td>
-                  <td th:text="${test.value.getOutput()}!=null?${test.value.getOutput()}:${test.value.getReason()}"></td>
+                  <td th:text="${test.value.getReason()}"></td>
+                  <td th:text="${test.value.getOutput()}"></td>
                   <td th:text="${test.value.getExpectedOutput()}"></td>
                 </tr>
               </table>
