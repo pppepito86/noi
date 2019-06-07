@@ -1,6 +1,8 @@
 <!DOCTYPE html>
 <html>
 <head th:replace="fragments/head :: head"></head>
+<meta charset="utf-8" />
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
 <body class="hold-transition skin-blue sidebar-mini">
 <div class="wrapper">
 <header th:replace="fragments/header :: header"></header>
@@ -11,7 +13,7 @@
     <!-- Content Header (Page header) -->
     <section class="content-header">
       <h1>
-        Communication
+        Комуникация
       </h1>
       <ol class="breadcrumb">
         <li><a th:href="@{/admin}"><i class="fa fa-dashboard"></i> Home</a></li>
@@ -54,22 +56,25 @@
 		</div>
 		
 		<div class="col-md-4">
+		<form role="form" th:action="@{'/user/question'}" method="post" enctype="multipart/form-data">
+		              
 			<div class="box box-success">
 				<div class="box-header with-border">
-					<h3 class="box-title"> Ask question </h3>
+					<h3 class="box-title"> Задай въпрос </h3>
 				</div>	
 				<div class="box-body">
 					<form role="form" action="/user/send-message" method="post">
 	                	<div class="form-group">
-	                		<label for="message">Message</label>
-							<textarea id="message" class="form-control" rows="5" placeholder="Enter message..."></textarea>
+	                		<label for="message">Въпрос</label>
+							<textarea id="message" name="message" class="form-control" rows="5" placeholder="Въведи съобщение..."></textarea>
 						</div>
 					</form>
 				</div>
 				<div class="box-footer">
-	                <button type="submit" class="btn btn-primary">Send</button>
+	                <button type="submit" class="btn btn-primary">Изпрати</button>
 	            </div>
 			</div>	
+		</form>
 		</div>
 		
 

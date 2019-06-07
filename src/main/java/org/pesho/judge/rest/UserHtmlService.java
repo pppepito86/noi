@@ -27,6 +27,25 @@ import org.springframework.web.multipart.MultipartFile;
 @Controller
 public class UserHtmlService extends HtmlService {
 
+
+	@GetMapping("/user/communication")
+    public String userCommunication(Model model) {
+		int contestId = getCurrentUserContestId();
+		addContestProblemsToModel(model, contestId);
+		
+		addIsStarted(model, contestId);
+		addTimeLeft(model, contestId);
+
+		return "user/communication";
+	}
+	
+	@PostMapping("/user/question")
+    public String userQuestion(@RequestParam("message") String message) {
+		System.out.println(message);
+
+		return "redirect:/user/communication";
+	}
+
 	@GetMapping("/user/problem/{problem-number}")
     public String userProblem(Model model, 
     		@PathVariable("problem-number") Integer problemNumber) {
