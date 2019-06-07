@@ -991,6 +991,7 @@ public class AdminHtmlService extends HtmlService {
 			@RequestParam("grade-column-index") Optional<Integer> gradeColumnIndex,
 			@RequestParam("contest-column-index") int contestColumnIndex, 
 			@RequestParam("initials-column-index") Optional<Integer> initialsColumnIndex,
+			@RequestParam("password-column-index") Optional<String> passwordColumnIndex,
 			Model model)
 			throws Exception {
 		
@@ -1005,6 +1006,9 @@ public class AdminHtmlService extends HtmlService {
 		        contest = new HomographTranslator().translate(contest);
 		        
 		        String password = Long.toHexString(Double.doubleToLongBits(Math.random()));
+		        if (passwordColumnIndex.isPresent()) {
+		        	password = record.get(passwordColumnIndex.get());
+		        }
 		        
 		        if (!groupNumUsersMap.containsKey(contest)) {
 		        	groupNumUsersMap.put(contest, 0);
