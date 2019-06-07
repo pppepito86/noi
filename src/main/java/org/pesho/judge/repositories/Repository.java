@@ -17,6 +17,20 @@ public class Repository {
     @Autowired
     private JdbcTemplate template;
 
+	public List<Map<String, Object>> listQuestions(String username) {
+        return template.queryForList("SELECT * from questions where username=?", username);
+	}
+    
+    public synchronized int addQuestion(String username, String question) {
+    	template.update("INSERT INTO questions(topic, username, question) VALUES(?, ?, ?)", 
+    			"", username, question);
+    	
+    	Optional<Object> last = template.queryForList("SELECT MAX(id) FROM questions").stream()
+    			.map(x -> x.get("MAX(id)")).findFirst();
+    	
+    	return (int) last.get();
+    }
+    
     public synchronized int addContest(String name, Timestamp start, Timestamp end) {
     	template.update("INSERT INTO contests(name, start_time, end_time) VALUES(?, ?, ?)", 
     			name, start, end);

@@ -33,6 +33,10 @@ public class UserHtmlService extends HtmlService {
 		int contestId = getCurrentUserContestId();
 		addContestProblemsToModel(model, contestId);
 		
+		String username = SecurityContextHolder.getContext().getAuthentication().getName();
+		List<Map<String,Object>> questions = repository.listQuestions(username);
+		model.addAttribute("questions", questions);
+		
 		addIsStarted(model, contestId);
 		addTimeLeft(model, contestId);
 
@@ -40,8 +44,9 @@ public class UserHtmlService extends HtmlService {
 	}
 	
 	@PostMapping("/user/question")
-    public String userQuestion(@RequestParam("message") String message) {
-		System.out.println(message);
+    public String userQuestion(@RequestParam("question") String question) {
+		String username = SecurityContextHolder.getContext().getAuthentication().getName();
+		repository.addQuestion(username, question);
 
 		return "redirect:/user/communication";
 	}

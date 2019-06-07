@@ -1,4 +1,5 @@
 --DROP TABLE IF EXISTS `ips`;
+--DROP TABLE IF EXISTS `questions`;
 --DROP TABLE IF EXISTS `submissions`;
 --DROP TABLE IF EXISTS `problems`;
 --DROP TABLE IF EXISTS `contests`;
@@ -79,5 +80,14 @@ CREATE TABLE IF NOT EXISTS `ips`(
   PRIMARY KEY (`id`)
 ) ENGINE=InnoDB AUTO_INCREMENT=1 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
+CREATE TABLE IF NOT EXISTS `questions`(
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `username` varchar(100) NOT NULL,
+  `topic` varchar(100) NOT NULL,
+  `question` varchar(1000) NOT NULL,
+  `answer` varchar(1000) NULL,
+  `time` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB AUTO_INCREMENT=1 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
 UPDATE submissions set verdict='waiting' where verdict='judging';
