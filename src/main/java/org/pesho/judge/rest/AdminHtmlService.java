@@ -991,7 +991,7 @@ public class AdminHtmlService extends HtmlService {
 			@RequestParam("grade-column-index") Optional<Integer> gradeColumnIndex,
 			@RequestParam("contest-column-index") int contestColumnIndex, 
 			@RequestParam("initials-column-index") Optional<Integer> initialsColumnIndex,
-			@RequestParam("password-column-index") Optional<String> passwordColumnIndex,
+			@RequestParam("password-column-index") Optional<Integer> passwordColumnIndex,
 			Model model)
 			throws Exception {
 		
