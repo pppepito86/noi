@@ -136,8 +136,9 @@ public class HtmlService implements RunTerminateListener {
 	public String addSubmission(MultipartFile file, String code, Integer problemNumber, String localIp) throws IOException {
 		long submissionTime = System.currentTimeMillis();
 		
-		String city = "Sofia";
 		String username = SecurityContextHolder.getContext().getAuthentication().getName();
+		String city = repository.getUserCity(username).orElse("Sofia");
+		
 		String contest = getCurrentUserContest();
 		int contestId = getCurrentUserContestId();
 		String problemName = repository

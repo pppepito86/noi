@@ -277,6 +277,10 @@ public class Repository {
     public Optional<String> getUserDisplayName(String username) {
     	return template.queryForList("select display_name from users where name=?", username).stream().map(x -> x.get("display_name").toString()).findFirst();
     }
+
+    public Optional<String> getUserCity(String username) {
+    	return template.queryForList("select city from users where name=?", username).stream().map(x -> x.get("city").toString()).findFirst();
+    }
     
     public List<Map<String, Object>> getUserSubmissions(String name) {
     	return template.queryForList("SELECT upload_time from submissions" +
