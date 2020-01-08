@@ -10,7 +10,7 @@ public class HomographTranslator {
 	static {
 		HOMOGRAPHS = new ArrayList<>();
 		HOMOGRAPHS.add(new Homograph('A', new char[] {'А'}));
-		HOMOGRAPHS.add(new Homograph('B', new char[] {'Б'}));
+		HOMOGRAPHS.add(new Homograph('B', new char[] {'Б','В'}));
 		HOMOGRAPHS.add(new Homograph('C', new char[] {'С'}));
 		HOMOGRAPHS.add(new Homograph('D', new char[] {'Д'}));
 		HOMOGRAPHS.add(new Homograph('E', new char[] {'Е'}));
