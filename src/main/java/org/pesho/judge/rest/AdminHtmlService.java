@@ -990,6 +990,7 @@ public class AdminHtmlService extends HtmlService {
 			@RequestParam("school-column-index") Optional<Integer> schoolColumnIndex,
 			@RequestParam("grade-column-index") Optional<Integer> gradeColumnIndex,
 			@RequestParam("contest-column-index") int contestColumnIndex, 
+			@RequestParam("place-column-index") Optional<Integer> placeColumnIndex,
 			@RequestParam("initials-column-index") Optional<Integer> initialsColumnIndex,
 			@RequestParam("password-column-index") Optional<Integer> passwordColumnIndex,
 			Model model)
@@ -1047,7 +1048,12 @@ public class AdminHtmlService extends HtmlService {
 		        	grade = record.get(gradeColumnIndex.get());
 		        }
 		        
-		        repository.addUser(username, password, name, contest, city, school, grade);
+		        String place = null;
+		        if (placeColumnIndex.isPresent()) {
+		        	place = record.get(placeColumnIndex.get());
+		        }
+		        
+		        repository.addUser(username, password, name, contest, city, school, grade, place);
 		    }
 		} finally {
 		    csv.close();

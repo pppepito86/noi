@@ -16,6 +16,7 @@ CREATE TABLE IF NOT EXISTS `users` (
   `grade` varchar(100),
   `school` varchar(100),
   `city` varchar(100),
+  `place` varchar(100),
   `contest` varchar(100) DEFAULT "",
   PRIMARY KEY (`id`)
 ) ENGINE=InnoDB AUTO_INCREMENT=1 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;

@@ -258,11 +258,11 @@ public class Repository {
 	
     public synchronized int addUser(String username, 
     		String password, String displayName, String group, 
-    		String city, String school, String grade) {
+    		String city, String school, String grade, String place) {
     	
-    	template.update("INSERT INTO users(name, display_name, password, contest, role, city, school, grade) "
-    			+ "VALUES(?, ?, ?, ?, ?, ?, ?, ?)", 
-    			username, displayName, password, group, "USER", city, school, grade);
+    	template.update("INSERT INTO users(name, display_name, password, contest, role, city, school, grade, place) "
+    			+ "VALUES(?, ?, ?, ?, ?, ?, ?, ?, ?)", 
+    			username, displayName, password, group, "USER", city, school, grade, place);
     	
     	Optional<Object> last = template.queryForList("SELECT MAX(id) FROM users").stream()
     			.map(x -> x.get("MAX(id)")).findFirst();
