@@ -20,6 +20,7 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.Optional;
+import java.util.Random;
 import java.util.TimeZone;
 import java.util.TreeMap;
 import java.util.stream.Collectors;
@@ -1006,13 +1007,20 @@ public class AdminHtmlService extends HtmlService {
 		        String contest = record.get(contestColumnIndex).trim();
 		        contest = new HomographTranslator().translate(contest);
 		        
-		        String password = Long.toHexString(Double.doubleToLongBits(Math.random()));
-		        if (password.length() > 8) password = password.substring(password.length()-8);
-
-		        if (password.chars().mapToObj(c -> (char) c).noneMatch(Character::isLetter)) {
-		        	char first = (char) ('a'+password.charAt(0)%6);
-		        	password = first + password.substring(1);
+//		        String password = Long.toHexString(Double.doubleToLongBits(Math.random()));
+//		        if (password.length() > 8) password = password.substring(password.length()-8);
+//
+//		        if (password.chars().mapToObj(c -> (char) c).noneMatch(Character::isLetter)) {
+//		        	char first = (char) ('a'+password.charAt(0)%6);
+//		        	password = first + password.substring(1);
+//		        }
+		        Random r = new Random();
+		        String password = "";
+		        for (int i = 0; i < 8; i++) {
+		        	char c = (char) ('A'+r.nextInt(26));
+		        	password += c;
 		        }
+		        
 		        if (passwordColumnIndex.isPresent()) {
 		        	password = record.get(passwordColumnIndex.get());
 		        }
