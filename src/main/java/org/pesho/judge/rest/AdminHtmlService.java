@@ -1006,23 +1006,30 @@ public class AdminHtmlService extends HtmlService {
 		        contest = new HomographTranslator().translate(contest);
 		        
 		        String password = Long.toHexString(Double.doubleToLongBits(Math.random()));
+		        if (password.length() > 8) password = password.substring(password.length()-8);
 		        if (passwordColumnIndex.isPresent()) {
 		        	password = record.get(passwordColumnIndex.get());
 		        }
 		        
 		        if (!groupNumUsersMap.containsKey(contest)) {
-		        	groupNumUsersMap.put(contest, 0);
+		        	groupNumUsersMap.put(contest, 1);
 		        }
 		        int id = groupNumUsersMap.get(contest);
 		        groupNumUsersMap.put(contest, id+1);
-		        String username = contest + String.format("%03d", id);
-		        if (initialsColumnIndex.isPresent()) {
-		        	username = record.get(initialsColumnIndex.get());
-		        }
 		        
 		        String city = null;
 		        if (cityColumnIndex.isPresent()) {
 		        	city = record.get(cityColumnIndex.get());
+		        }
+		        
+		        String username = contest + String.format("%03d", id);
+		        if ("Пловдив".equalsIgnoreCase(city) || "Plovdiv".equalsIgnoreCase(city)) {
+		        	username = username.substring(0, 1) + "1" + username.substring(2);
+		        } else if (city != null && (city.toLowerCase().endsWith("търново") || city.toLowerCase().endsWith("tarnovo"))) {
+		        	username = username.substring(0, 1) + "2" + username.substring(2);
+		        }
+		        if (initialsColumnIndex.isPresent()) {
+		        	username = record.get(initialsColumnIndex.get());
 		        }
 		        
 		        String school = null;
