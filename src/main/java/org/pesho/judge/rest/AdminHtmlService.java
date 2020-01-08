@@ -1007,6 +1007,11 @@ public class AdminHtmlService extends HtmlService {
 		        
 		        String password = Long.toHexString(Double.doubleToLongBits(Math.random()));
 		        if (password.length() > 8) password = password.substring(password.length()-8);
+
+		        if (password.chars().mapToObj(c -> (char) c).noneMatch(Character::isLetter)) {
+		        	char first = (char) ('a'+password.charAt(0)%6);
+		        	password = first + password.substring(1);
+		        }
 		        if (passwordColumnIndex.isPresent()) {
 		        	password = record.get(passwordColumnIndex.get());
 		        }
