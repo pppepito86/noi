@@ -1,4 +1,6 @@
 --DROP TABLE IF EXISTS `ips`;
+--DROP TABLE IF EXISTS `announcements_seen`;
+--DROP TABLE IF EXISTS `announcements`;
 --DROP TABLE IF EXISTS `questions`;
 --DROP TABLE IF EXISTS `submissions`;
 --DROP TABLE IF EXISTS `problems`;
@@ -87,6 +89,25 @@ CREATE TABLE IF NOT EXISTS `questions`(
   `topic` varchar(100) NOT NULL,
   `question` varchar(1000) NOT NULL,
   `answer` varchar(1000) NULL,
+  `question_time` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,
+  `answer_time` timestamp NULL,
+  `read` tinyint(1) NOT NULL DEFAULT 0,
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB AUTO_INCREMENT=1 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+
+CREATE TABLE IF NOT EXISTS `announcements`(
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `contest_id` int(11) NOT NULL,
+  `topic` varchar(100) NULL,
+  `announcement` varchar(1000) NOT NULL,
+  `time` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB AUTO_INCREMENT=1 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+
+CREATE TABLE IF NOT EXISTS `announcements_seen`(
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `announcement_id` int(11) NOT NULL,
+  `username` varchar(100) NOT NULL,
   `time` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,
   PRIMARY KEY (`id`)
 ) ENGINE=InnoDB AUTO_INCREMENT=1 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;

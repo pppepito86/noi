@@ -98,13 +98,13 @@
               <div th:if="${workers.isEmpty()}">
               	No workers
               </div>
-                </div>
+              </div>
               </div>
              
               <div class="chart tab-pane" id="ensure_workers" style="position: relative;">
             <form role="form" action="/admin/workers/ensure" method="post">
-              <div class="box-body">
-                <div class="form-group">
+              <div className="box-body">
+                <div className="form-group">
                   <label for="count">Count</label>
                   <input type="text" class="form-control" name="count" id="count" placeholder="How many workers would you like?" />
                 </div>
