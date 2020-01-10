@@ -18,13 +18,30 @@ echo "mysql-server mysql-server/root_password password password" | sudo debconf-
 echo "mysql-server mysql-server/root_password_again password password" | sudo debconf-set-selections
 apt-get install -y mysql-server
 
+tee -a /etc/mysql/my.cnf <<EOF
+
+[client]
+default-character-set = utf8mb4
+
+[mysql]
+default-character-set = utf8mb4
+
+[mysqld]
+character-set-client-handshake = FALSE
+character-set-server = utf8mb4
+collation-server = utf8mb4_unicode_ci
+EOF
+
+service mysql stop
+service mysql start
+
 #java
 echo "oracle-java8-installer shared/accepted-oracle-license-v1-1 select true" | debconf-set-selections
 echo "oracle-java8-installer shared/accepted-oracle-license-v1-1 seen true" | debconf-set-selections
 apt-get install oracle-java8-installer -y
 
 #maven
-sudo apt-get install -y maven
+apt-get install -y maven
 
 #noi project
 git clone https://github.com/pppepito86/sandbox.git /vagrant/sandbox
