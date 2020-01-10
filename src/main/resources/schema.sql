@@ -91,7 +91,7 @@ CREATE TABLE IF NOT EXISTS `questions`(
   `answer` varchar(1000) NULL,
   `question_time` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,
   `answer_time` timestamp NULL,
-  `read` tinyint(1) NOT NULL DEFAULT 0,
+  `seen` tinyint(1) NOT NULL DEFAULT 0,
   PRIMARY KEY (`id`)
 ) ENGINE=InnoDB AUTO_INCREMENT=1 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
