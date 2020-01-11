@@ -292,6 +292,8 @@ public class ResultHtmlService extends HtmlService {
 		
 		for (Map<String, Object> user: users) {
 			if (user.get("name") == null || user.get("city") == null) continue;
+			if (!grad.equalsIgnoreCase(user.get("city").toString())) continue;
+
 			String key = user.get("name").toString().toUpperCase() +
 					user.get("city").toString().toUpperCase() +
 					user.get("contest").toString().toUpperCase();
