@@ -337,7 +337,8 @@ public class ResultHtmlService extends HtmlService {
 		    		list.add(result.getValue().get(i).get("points"));
 	    		}
 	    		for (int i = 1; i <= 3; i++) {
-	    			list.add(result.getValue().get(i).get("details"));
+	    			String details = result.getValue().get(i).getOrDefault("details", "").toString();
+	    			list.add("\""+details+"\"");
 	    		}
 	    		
 //	    		Object[] values = Arrays
