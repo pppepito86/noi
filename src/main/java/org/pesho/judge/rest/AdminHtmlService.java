@@ -18,6 +18,7 @@ import java.util.Calendar;
 import java.util.Collections;
 import java.util.Enumeration;
 import java.util.HashMap;
+import java.util.HashSet;
 import java.util.List;
 import java.util.Map;
 import java.util.Optional;
@@ -714,6 +715,27 @@ public class AdminHtmlService extends HtmlService {
 		List<Map<String,Object>> logs = repository.listLogs();
 		model.addAttribute("contests", contests);
 		model.addAttribute("logs", logs);
+		
+		HashMap<String, Integer> ips = new HashMap<>();
+		HashMap<String, HashSet<String>> users = new HashMap<>();
+		for (Map<String,Object> log: logs) {
+			if (log.get("topic") == null) continue;
+			if (!log.get("topic").toString().contains("_login")) continue;
+			String[] split = log.get("title").toString().split("_");
+			if (split.length < 2) continue;
+			
+			String ip = split[1];
+			int br = ips.getOrDefault(ip, 0);
+			ips.put(ip, br+1);
+			
+			String user = split[0];
+			if (!users.containsKey(user)) users.put(user, new HashSet<>());
+			users.get(user).add(ip);
+		}
+		System.out.println("***ips:" + ips);
+		for (Map.Entry<String, HashSet<String>> entry: users.entrySet()) {
+			if (entry.getValue().size() > 1) System.out.println("user: " + entry.getKey() + " with: " + entry.getValue());
+		}
 
 		return "logs";
 	}
