@@ -20,12 +20,26 @@ public class Repository {
 	public List<Map<String, Object>> listQuestions(String username) {
         return template.queryForList("SELECT * from questions where username=?", username);
 	}
+
+	public List<Map<String, Object>> listAllQuestions() {
+		return template.queryForList("SELECT * from questions");
+	}
     
     public synchronized int addQuestion(String username, String question) {
     	template.update("INSERT INTO questions(topic, username, question) VALUES(?, ?, ?)", 
     			"", username, question);
     	
     	Optional<Object> last = template.queryForList("SELECT MAX(id) FROM questions").stream()
+    			.map(x -> x.get("MAX(id)")).findFirst();
+    	
+    	return (int) last.get();
+    }
+
+    public synchronized int addAnnouncement(int contestId, String topic, String announcement) {
+    	template.update("INSERT INTO announcements(contest_id, topic, announcement) VALUES(?, ?, ?)", 
+    			contestId, topic, announcement);
+    	
+    	Optional<Object> last = template.queryForList("SELECT MAX(id) FROM announcements").stream()
     			.map(x -> x.get("MAX(id)")).findFirst();
     	
     	return (int) last.get();
@@ -290,6 +304,16 @@ public class Repository {
 	public void updateContest(int id, Timestamp start, Timestamp end) {
 		template.update("UPDATE contests SET start_time=?, end_time=? where id=?", 
 				start, end, id);
+	}
+
+	public void setQuestionAnswer(int id, String answer) {
+		template.update("UPDATE questions SET answer=?, answer_time=now() where id=?", 
+				answer, id);		
+	}
+
+	public List<Map<String, Object>> listAllAnnouncements(int contestId) {
+		return template.queryForList("select * from announcements where contest_id=?", contestId);
+
 	}
     
 }

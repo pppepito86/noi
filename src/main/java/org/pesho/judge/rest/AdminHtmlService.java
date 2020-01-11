@@ -16,6 +16,7 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Calendar;
 import java.util.Collections;
+import java.util.Enumeration;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -25,6 +26,7 @@ import java.util.TimeZone;
 import java.util.TreeMap;
 import java.util.stream.Collectors;
 
+import javax.servlet.http.HttpServletRequest;
 import javax.ws.rs.Consumes;
 import javax.ws.rs.core.MediaType;
 
@@ -64,9 +66,41 @@ public class AdminHtmlService extends HtmlService {
 
 	@GetMapping("/admin/communication")
     public String adminCommunication(Model model) {
-		
+		List<Map<String,Object>> contests = repository.listContests();
+		List<Map<String,Object>> questions = repository.listAllQuestions();
+		model.addAttribute("contests", contests);
+		model.addAttribute("questions", questions);
+
     	return "communication";
     }
+	
+	@PostMapping("/admin/questions")
+    public String adminSendMessage(HttpServletRequest request) {
+		for(Map.Entry<String, String[]> entry: request.getParameterMap().entrySet()) {
+			String paramName = entry.getKey();
+			if (!paramName.startsWith("text_")) continue;
+			if (entry.getValue().length == 0) continue;
+			String paramValue = entry.getValue()[0];
+			if (paramValue == null || paramValue.trim().isEmpty()) continue;
+			
+			paramName = paramName.replace("text_", "");
+			int id = Integer.parseInt(paramName);
+			repository.setQuestionAnswer(id, paramValue);
+		}
+    	return "redirect:/admin/communication";
+    }
+	
+	@PostMapping("/admin/announcements")
+	@Consumes(MediaType.MULTIPART_FORM_DATA)
+	public String addAnnouncement(
+			@RequestParam("topic") String topic,
+			@RequestParam("announcement") String announcement,
+			@RequestParam("contestId") int contestId,
+			Model model) throws Exception {
+
+		repository.addAnnouncement(contestId, topic, announcement);
+		return "redirect:/admin/contests/"+contestId;
+	}
 	
 	@PostMapping("/admin/send-message")
     public String adminSendMessage(@RequestParam("message") String message,
@@ -74,7 +108,6 @@ public class AdminHtmlService extends HtmlService {
     		@RequestParam("username") Optional<String> username,
     		@RequestParam("contest-name") Optional<String> contestname) {
 		
-		System.out.println(message + " " + messageType);
     	return "redirect:/admin/communication";
     }
 	
@@ -726,6 +759,8 @@ public class AdminHtmlService extends HtmlService {
 
 		model.addAttribute("startTime", sdf.format(startTime.getTime()));
 		model.addAttribute("endTime", sdf.format(endTime.getTime()));
+		
+		model.addAttribute("announcements", repository.listAllAnnouncements(contestId));
 		return "contest";
 	}
 	

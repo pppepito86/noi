@@ -92,6 +92,62 @@
           </div>
           <!-- /.nav-tabs-custom -->
           
+          <!-- submissions -->
+          <div class="nav-tabs-custom">
+            <!-- Tabs within a box -->
+            <ul class="nav nav-tabs pull-right">
+              <li class="active"><a href="#unread_logs" data-toggle="tab">List</a></li>
+              <li><a href="#all_logs" data-toggle="tab">Create</a></li>
+              <li class="pull-left header"><i class="fa fa-inbox"></i> Announcements</li>
+            </ul>
+            <div class="tab-content no-padding">
+              <div class="chart tab-pane active" id="unread_logs" style="position: relative;">
+              <div class="box-body">
+              
+              <table id="example1" class="table table-bordered table-striped">
+              <thead>
+                <tr>
+                  <th style="width: 10px">#</th>
+                  <th style="width: 10px">Topic</th>
+                  <th>Announcement</th>
+                </tr>
+                </thead>
+                <tr th:each="announcement: ${announcements}">
+                  <td th:text="${announcement.get('id')}"></td>
+                  <td th:text="${announcement.get('topic')}"></td>
+                  <td th:text="${announcement.get('announcement')}"></td>
+                </tr>
+                </table>
+                </div>
+
+              </div>
+              
+              <div class="chart tab-pane" id="all_logs" style="position: relative;">
+              <div class="box-body">
+			  <form role="form" th:action="'/admin/announcements'" method="post" enctype="multipart/form-data">
+                <div class="form-group">
+                  <label for="topic">Topic</label>
+                  <input type="text" class="form-control" name="topic" id="topic"/>
+                </div>
+                <div class="form-group">
+                  <label for="end_time">Announcement</label>
+                  <input type="text" class="form-control" name="announcement" id="announcement" />
+                </div>
+                  <input type="hidden" name="contestId" th:value="${contest.get('id')}" />
+              <!-- /.box-body -->
+              <div class="box-footer">
+                <button type="submit" class="btn btn-primary">Update</button>
+              </div>            
+             </form>  
+                </div>              
+              </div>
+            </div>
+          </div>
+
+<!-- /submissions -->
+          
+          
+          
 <!-- /problems -->
 	</section>
 
