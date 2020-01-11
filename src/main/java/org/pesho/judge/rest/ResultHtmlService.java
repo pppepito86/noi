@@ -217,12 +217,15 @@ public class ResultHtmlService extends HtmlService {
 		return "resultsfull";
 	}
 	
-	@GetMapping("/resultsfullcsv/{contest}")
-	public ResponseEntity<InputStreamResource> adminResultsFullCsvPage(@PathVariable("contest") String contest) {
+	@GetMapping("/csv/{contest}/{city}")
+	public ResponseEntity<InputStreamResource> adminResultsFullCsvPage(
+			@PathVariable("contest") String contest,
+			@PathVariable("city") String grad) {
 		List<Map<String,Object>> submissions = repository.listDetailedSubmissions().stream()
 				.filter(x -> !"author".equalsIgnoreCase(x.get("city").toString()))
 				.filter(x -> !"admin".equalsIgnoreCase(x.get("city").toString()))
 				.filter(x -> !"test".equalsIgnoreCase(x.get("city").toString()))
+				.filter(x -> grad.equalsIgnoreCase(x.get("city").toString()))
 				.filter(x -> contest.equalsIgnoreCase(x.get("contest_name").toString()))
 				.collect(Collectors.toList());
 		int problemsCount = repository.maxProblemNumber();
