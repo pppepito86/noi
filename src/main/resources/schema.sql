@@ -29,6 +29,7 @@ CREATE TABLE IF NOT EXISTS `logs` (
   `title` varchar(500) NOT NULL,
   `message` varchar(1000) NOT NULL,
   `read` tinyint(1) NOT NULL DEFAULT 0,
+  `time` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,
   PRIMARY KEY (`id`)
 ) ENGINE=InnoDB AUTO_INCREMENT=1 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 

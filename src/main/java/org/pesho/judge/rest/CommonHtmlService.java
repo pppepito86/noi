@@ -11,11 +11,16 @@ public class CommonHtmlService extends HtmlService {
     @GetMapping("/")
     public String index() {
     	Object adminRole = new SimpleGrantedAuthority("ROLE_ADMIN");
+    	Object resultsRole = new SimpleGrantedAuthority("ROLE_RESULT");
 		boolean isAdmin = SecurityContextHolder.getContext().getAuthentication().getAuthorities().contains(adminRole);
+		boolean isResult = SecurityContextHolder.getContext().getAuthentication().getAuthorities().contains(resultsRole);
     	if (isAdmin) {
     		return "redirect:/admin";
+    	} else if (isResult) {
+    		return "redirect:/results";
+    	} else {
+    		return "redirect:/user/problem/1";
     	}
-    	return "redirect:/user/problem/1";
     }
 
     @GetMapping("/login")

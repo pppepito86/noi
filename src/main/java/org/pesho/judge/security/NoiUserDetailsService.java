@@ -27,6 +27,10 @@ public class NoiUserDetailsService implements UserDetailsService {
 			return new User("admin", "admin", 
 					Arrays.asList(new SimpleGrantedAuthority(ROLE_PREFIX + "ADMIN")));
 		}
+		if (username.equalsIgnoreCase("results")) {
+			return new User("results", "noi1_results", 
+					Arrays.asList(new SimpleGrantedAuthority(ROLE_PREFIX + "RESULT")));
+		}
 		
 		Optional<Map<String, Object>> result = template.queryForList(
 				"select name, password, role from users where name=?", 
