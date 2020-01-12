@@ -183,6 +183,25 @@ public class AdminHtmlService extends HtmlService {
 		return "submissions";	
 	}
 
+	@GetMapping("/admin/submissions/store")
+	public String adminStoreSubmissionsPage(Model model) {
+		List<Map<String,Object>> contests = repository.listContests();
+		List<Map<String,Object>> submissions = repository.listDetailedSubmissions();
+		List<Map<String,Object>> problems = repository.listProblemsWithContest();
+		for (Map<String,Object> submission: submissions) {
+			File sourceFile = getFile("submissions", String.valueOf(submission.get("id")), submission.get("file").toString());
+			File newFile = getFile("store", submission.get("username").toString(), submission.get("problem_name")+"_"+submission.get("points")+".cpp");
+			newFile.getParentFile().mkdirs();
+			try {
+				FileUtils.copyFile(sourceFile, newFile);
+			} catch (IOException e) {
+				e.printStackTrace();
+			}
+		}
+		
+		return "submissions";	
+	}
+
 //	@GetMapping("/admin/results")
 //	public String adminResultsPage(Model model) {
 //		List<Map<String,Object>> users = repository.listUsers();
