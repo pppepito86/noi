@@ -190,7 +190,7 @@ public class AdminHtmlService extends HtmlService {
 		List<Map<String,Object>> problems = repository.listProblemsWithContest();
 		for (Map<String,Object> submission: submissions) {
 			File sourceFile = getFile("submissions", String.valueOf(submission.get("id")), submission.get("file").toString());
-			File newFile = getFile("store", submission.get("username").toString(), submission.get("problem_name")+"_"+submission.get("points")+".cpp");
+			File newFile = getFile("store", submission.get("username").toString(), String.valueOf(submission.get("id"))+submission.get("problem_name")+"_"+submission.get("points")+".cpp");
 			newFile.getParentFile().mkdirs();
 			try {
 				FileUtils.copyFile(sourceFile, newFile);
