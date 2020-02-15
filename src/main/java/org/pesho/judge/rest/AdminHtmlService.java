@@ -557,7 +557,8 @@ public class AdminHtmlService extends HtmlService {
 		    		list.add(result.getValue().get(i).get("points"));
 	    		}
 	    		for (int i = 1; i <= 3; i++) {
-	    			list.add(result.getValue().get(i).get("details"));
+	    			String details = result.getValue().get(i).getOrDefault("details", "").toString();
+	    			list.add("\""+details+"\"");
 	    		}
 	    		
 //	    		Object[] values = Arrays
@@ -928,7 +929,7 @@ public class AdminHtmlService extends HtmlService {
 		int automaticCount = count-manualCount; // Math.max((count - manualCount + 1) / 2, 0);
 		InstanceType type = InstanceType.valueOf("C4Large");
 		Configuration configuration = new Configuration()
-				.setImageId("ami-048f3a2a67a17d747")
+				.setImageId("ami-06af6ac03d5a5f050")
 				.setInstanceType(type)
 				.setSecurityGroup("All")
 				.setSecurityKeyName("noi")
