@@ -1,8 +1,5 @@
 #!/bin/bash
 
-set -e -x
-
-add-apt-repository ppa:webupd8team/java -y
 apt-get update
 
 apt-get install -y curl git gcc make python-dev vim-nox jq cgroup-lite silversearcher-ag
@@ -35,10 +32,9 @@ EOF
 service mysql stop
 service mysql start
 
-#java
-echo "oracle-java8-installer shared/accepted-oracle-license-v1-1 select true" | debconf-set-selections
-echo "oracle-java8-installer shared/accepted-oracle-license-v1-1 seen true" | debconf-set-selections
-apt-get install oracle-java8-installer -y
+#open jdk 8
+sudo apt-get purge openjdk*
+sudo apt-get install -y openjdk-8-jdk
 
 #maven
 apt-get install -y maven
