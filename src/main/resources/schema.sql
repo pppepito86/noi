@@ -36,8 +36,8 @@ CREATE TABLE IF NOT EXISTS `logs` (
 CREATE TABLE IF NOT EXISTS `contests` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
   `name` varchar(100) NOT NULL,
-  `start_time` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,
-  `end_time` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,
+  `start_time` timestamp(6) NOT NULL DEFAULT CURRENT_TIMESTAMP(6),
+  `end_time` timestamp(6) NOT NULL DEFAULT CURRENT_TIMESTAMP(6),
   PRIMARY KEY (`id`)
 ) ENGINE=InnoDB AUTO_INCREMENT=1 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
@@ -62,6 +62,8 @@ CREATE TABLE IF NOT EXISTS `submissions` (
   `details` mediumtext DEFAULT NULL,
   `worker_id` int(11) DEFAULT NULL,
   `upload_time` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,
+  `update_time` timestamp(6) NOT NULL DEFAULT CURRENT_TIMESTAMP(6) ON UPDATE CURRENT_TIMESTAMP(6),
+  `is_official` tinyint(1) NOT NULL DEFAULT '0',
   PRIMARY KEY (`id`)
 ) ENGINE=InnoDB AUTO_INCREMENT=1 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
@@ -90,8 +92,8 @@ CREATE TABLE IF NOT EXISTS `questions`(
   `topic` varchar(100) NOT NULL,
   `question` varchar(1000) NOT NULL,
   `answer` varchar(1000) NULL,
-  `question_time` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,
-  `answer_time` timestamp NULL,
+  `question_time` timestamp(6) NOT NULL DEFAULT CURRENT_TIMESTAMP(6),
+  `answer_time` timestamp(6) NULL,
   `seen` tinyint(1) NOT NULL DEFAULT 0,
   PRIMARY KEY (`id`)
 ) ENGINE=InnoDB AUTO_INCREMENT=1 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
@@ -101,7 +103,7 @@ CREATE TABLE IF NOT EXISTS `announcements`(
   `contest_id` int(11) NOT NULL,
   `topic` varchar(100) NULL,
   `announcement` varchar(1000) NOT NULL,
-  `time` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,
+  `time` timestamp(6) NOT NULL DEFAULT CURRENT_TIMESTAMP(6),
   PRIMARY KEY (`id`)
 ) ENGINE=InnoDB AUTO_INCREMENT=1 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
@@ -109,8 +111,9 @@ CREATE TABLE IF NOT EXISTS `announcements_seen`(
   `id` int(11) NOT NULL AUTO_INCREMENT,
   `announcement_id` int(11) NOT NULL,
   `username` varchar(100) NOT NULL,
-  `time` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,
-  PRIMARY KEY (`id`)
+  `time` timestamp(6) NOT NULL DEFAULT CURRENT_TIMESTAMP(6),
+  PRIMARY KEY (`id`),
+  UNIQUE KEY `Uk_unvid_username` (`announcement_id`,`username`)
 ) ENGINE=InnoDB AUTO_INCREMENT=1 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
 UPDATE submissions set verdict='waiting' where verdict='judging';
